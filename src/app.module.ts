@@ -3,6 +3,7 @@ import {TypeOrmModule} from '@nestjs/typeorm';
 import { getConnectionOptions } from 'typeorm';
 import { UsersModule } from './users/users.module';
 import {ConfigModule} from '@nestjs/config'
+import { PostsModule } from './posts/posts.module';
 @Module({
   imports:[
     ConfigModule.forRoot({
@@ -13,6 +14,9 @@ import {ConfigModule} from '@nestjs/config'
     Object.assign(await getConnectionOptions(),{
       autoLoadEntities:true
     })
-  }), UsersModule]
+  }), 
+  UsersModule,
+  PostsModule
+]
 })
 export class AppModule {}
