@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BaseEntity } from 'typeorm';
 
 export enum UserRole {
     ADMIN = "admin",
@@ -7,7 +7,7 @@ export enum UserRole {
 }
 
 @Entity('users')
-export class User{
+export class User extends BaseEntity{
     @PrimaryGeneratedColumn('uuid')
     id:string;
 
@@ -15,16 +15,18 @@ export class User{
     username:string
 
     @Column({type:'varchar',length:256, nullable:false, unique:true})
-
+    email:string;
+    
     @Column({type:'text',nullable:false})
     password:string
 
     @Column({type:"enum",enum:UserRole, default:UserRole.USER})
     role:UserRole
 
-    @Column({type:'timestamp', default:()=> 'NOW()'})
-    created_at:string;
+   @CreateDateColumn({name:'created_at',type:'timestamp',nullable:false})
+   createdAt:Date
 
-    @Column({type:'timestamp', default:()=> 'NOW()'})
-    updated_at:string
+   @UpdateDateColumn({name:'updated_at',type:'timestamp',nullable:true})
+   updatedAt:Date
+
 }
