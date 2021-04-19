@@ -20,7 +20,7 @@ export class PostsController{
     @Post()
     @UsePipes(new ValidationPipe({whitelist:true}))
     createPost(@Body() createPostDto:CreatePostDto){
-        return this.postsService.createPost(createPostDto);
+        return this.postsService.createPost('aec4033a-ff1b-46a2-802d-997c8d555093',createPostDto);
     }
     @Patch(':id')
     @UsePipes(new ValidationPipe({

@@ -1,4 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BaseEntity } from 'typeorm';
+import { 
+    OneToMany,
+    Entity,
+     PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BaseEntity, JoinColumn } from 'typeorm';
+import { type } from 'os';
+import { Post } from 'src/posts/post.entity';
 
 export enum UserRole {
     ADMIN = "admin",
@@ -23,10 +28,13 @@ export class User extends BaseEntity{
     @Column({type:"enum",enum:UserRole, default:UserRole.USER})
     role:UserRole
 
-   @CreateDateColumn({name:'created_at',type:'timestamp',nullable:false})
-   createdAt:Date
+    @OneToMany(type => Post, post => post.user,{onDelete:'CASCADE'})
+    posts:Post[];
 
-   @UpdateDateColumn({name:'updated_at',type:'timestamp',nullable:true})
-   updatedAt:Date
+    @CreateDateColumn({name:'created_at',type:'timestamp',nullable:false})
+    createdAt:Date
+
+    @UpdateDateColumn({name:'updated_at',type:'timestamp',nullable:true})
+    updatedAt:Date
 
 }

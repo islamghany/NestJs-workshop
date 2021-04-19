@@ -1,4 +1,4 @@
-import { Controller, Get, Param, ParseIntPipe, Body, Patch, Delete } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe, Body, Patch, Delete,Post, ParseUUIDPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -13,8 +13,13 @@ export class UsersController {
     }
 
     @Get(':id')
-    user(@Param('id',ParseIntPipe) id:number){
-        return 'a user with a specific id';
+    user(@Param('id',ParseUUIDPipe) id:string){
+        return this.userService.getUser(id);
+    }
+
+    @Post()
+    createUser(@Body() createUserDto){
+        return this.userService.create(createUserDto);
     }
 
     @Patch(':id')

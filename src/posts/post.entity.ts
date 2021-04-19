@@ -1,4 +1,5 @@
-import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn} from 'typeorm'
+import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn} from 'typeorm'
+import { User } from 'src/users/user.entity';
 
 @Entity('posts')
 export class Post extends BaseEntity{
@@ -10,6 +11,10 @@ export class Post extends BaseEntity{
 
     @Column({type:'text',nullable:false})
     url:string;
+    
+    @ManyToOne(type=>User, user => user.posts)
+    @JoinColumn({name:'user_id'})
+    user:User;
 
     @CreateDateColumn({name:'created_at',type:'timestamp',nullable:false})
     createdAt:Date;
