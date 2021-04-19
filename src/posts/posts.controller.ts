@@ -1,5 +1,7 @@
-import {Controller, Get, Param, ParseUUIDPipe, Post, Body, Patch, Delete} from '@nestjs/common'
+import {Controller, Get, Param, ParseUUIDPipe, Post, Body, Patch, Delete, UsePipes, ValidationPipe} from '@nestjs/common'
 import { PostsService } from './posts.service';
+import { CreatePostDto } from './dto/create-post.dto';
+
 
 
 @Controller('posts')
@@ -16,11 +18,17 @@ export class PostsController{
         return this.postsService.getPost(id);
     }
     @Post()
-    createPost(@Body() createPostDto){
+    @UsePipes(new ValidationPipe({whitelist:true}))
+    createPost(@Body() createPostDto:CreatePostDto){
         return this.postsService.createPost(createPostDto);
     }
     @Patch(':id')
-    updatePost(@Param('id', ParseUUIDPipe) id:string, @Body() updatePostDto){
+    @UsePipes(new ValidationPipe({
+        whitelist:true,
+        forbidUnknownValues:true
+    }))
+    updatePost(@Param('id', ParseUUIDPipe) id:string, @Body() updatePostDto:CreatePostDto){
+        console.log(updatePostDto)
         return this.postsService.updatePost(id,updatePostDto);
     }
     @Delete(":id")

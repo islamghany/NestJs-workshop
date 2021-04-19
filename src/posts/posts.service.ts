@@ -1,6 +1,7 @@
 import {Injectable, HttpException, NotFoundException} from '@nestjs/common';
 import { PostRepository } from './post.repository';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CreatePostDto } from './dto/create-post.dto';
 
 @Injectable()
 export class PostsService {
@@ -21,7 +22,7 @@ export class PostsService {
         return post;
     }
 
-    async createPost(createPostDto){
+    async createPost(createPostDto:CreatePostDto){
         let post;
         try{
               post = await this.postRepository.create(createPostDto);
