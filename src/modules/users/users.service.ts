@@ -25,4 +25,8 @@ export class UsersService {
     });
     return users;
   }
+  async getUserbyUsername(username: string) {
+    const users = await this.userRepository.findOne({username});
+    return users;
+  }
 }

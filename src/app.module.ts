@@ -4,6 +4,7 @@ import { getConnectionOptions } from 'typeorm';
 import { UsersModule } from './modules/users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { PostsModule } from './modules/posts/posts.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { PostsModule } from './modules/posts/posts.module';
     }),
     UsersModule,
     PostsModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
